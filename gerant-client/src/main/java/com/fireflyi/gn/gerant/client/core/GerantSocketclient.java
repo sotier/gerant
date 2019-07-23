@@ -9,6 +9,9 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
+import io.netty.handler.timeout.IdleStateHandler;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author by fireflyi (6025606@qq.com)
@@ -18,11 +21,11 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
  */
 public class GerantSocketclient {
 
-    private static final Integer PORT = 6088;
+    private static final Integer PORT = 6288;
 
     public static void main(String[] args){
 
-        // 首先，netty通过ServerBootstrap启动服务端
+        //netty通过ServerBootstrap启动服务端
         Bootstrap client = new Bootstrap();
 
         EventLoopGroup group = new NioEventLoopGroup();
@@ -32,19 +35,19 @@ public class GerantSocketclient {
             client.handler(new ChannelInitializer<Channel>() {  //通道是NioSocketChannel
                 @Override
                 protected void initChannel(Channel ch) throws Exception {
-                    //字符串编码器，一定要加在SimpleClientHandler 的上面
+                    //Protobuf编解码器加在SimpleClientHandler的上面
                     ch.pipeline()
                             .addLast(new ProtobufVarint32FrameDecoder())
                             .addLast(new ProtobufDecoder(GerantReqProtobuf.GerantReqProtocol.getDefaultInstance()))
                             .addLast(new ProtobufVarint32LengthFieldPrepender())
                             .addLast(new ProtobufEncoder())
-                    //找到他的管道 增加他的handler
+                            .addLast(new IdleStateHandler(0, 120, 0, TimeUnit.SECONDS))
                             .addLast(new SimpleClientHandler());
                 }
             });
 
             //连接服务器
-            ChannelFuture future = client.connect("127.0.0.1", 6288).sync();
+            ChannelFuture future = client.connect("127.0.0.1", PORT).sync();
             if(future.isSuccess()){
                 System.out.println("客户端链接成功");
             }
@@ -53,7 +56,7 @@ public class GerantSocketclient {
             builder.setType(GerantReqProtobuf.ChatType.CHAT_TYPE_PUBLIC);
             builder.setReqMsg("cliend,send protobuf消息");
 
-            for(int i=0;i<10;i++) {
+            for(int i=0;i<2;i++) {
                 ChannelFuture futures = future.channel().writeAndFlush(builder.build());
                 futures.addListener((ChannelFutureListener) channelFuture ->
                         System.out.println("客户端手动发消息成功"));
@@ -67,5 +70,4 @@ public class GerantSocketclient {
             group.shutdownGracefully();
         }
     }
-
 }
