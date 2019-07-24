@@ -1,7 +1,9 @@
-package com.fireflyi.gn.gerant.service.handle;
+package com.fireflyi.gn.gerant.service.handler;
 
+import com.fireflyi.gn.gerant.common.service.GerantServerInfoService;
 import com.fireflyi.gn.gerant.common.util.ProToBufBuild;
 import com.fireflyi.gn.gerant.domain.protobuf.GerantReqProtobuf;
+import com.google.inject.Inject;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -44,7 +46,19 @@ public class GerantServerHandle extends SimpleChannelInboundHandler<GerantReqPro
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-
+        if (evt instanceof IdleStateEvent){
+            IdleStateEvent idleStateEvent = (IdleStateEvent) evt ;
+            //客户端心跳
+            if (idleStateEvent.state() == IdleState.WRITER_IDLE){
+                GerantReqProtobuf.GerantReqProtocol.Builder heartBeat = ProToBufBuild.Pinger();
+                ctx.writeAndFlush(heartBeat).addListeners((ChannelFutureListener) future -> {
+                    if (!future.isSuccess()) {
+                        future.channel().close();
+                    }
+                }) ;
+            }
+        }
+        super.userEventTriggered(ctx, evt);
     }
 
 }

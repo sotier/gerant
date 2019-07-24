@@ -1,9 +1,9 @@
-package com.fireflyi.gn.gerant.service;
+package com.fireflyi.gn.gerant.client;
 
+import com.fireflyi.gn.gerant.client.core.GerantSocketclient;
 import com.fireflyi.gn.gerant.core.annotation.Gnamed;
 import com.fireflyi.gn.gerant.core.aop.GerantMethodInterceptor;
 import com.fireflyi.gn.gerant.core.util.PropertyUtil;
-import com.fireflyi.gn.gerant.service.core.GerantSocketServer;
 import com.google.inject.*;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
@@ -11,13 +11,13 @@ import com.google.inject.name.Names;
 /**
  * @author by fireflyi (6025606@qq.com)
  * @website https://www.fireflyi.com
- * @date 2019/7/22
+ * @date 2019/7/24
  * DESC TODO
  */
-public class Application {
+public class Client {
 
     @Inject
-    GerantSocketServer gerantSocketServer;
+    GerantSocketclient gerantSocketclient;
 
     public static void main(String[] a){
 
@@ -32,7 +32,6 @@ public class Application {
                 binder.bindInterceptor(Matchers.any(), Matchers.annotatedWith(Gnamed.class), new GerantMethodInterceptor());
             }
         });
-        GerantSocketServer gss = injector.getInstance(Application.class).gerantSocketServer;
+        GerantSocketclient gcc = injector.getInstance(Client.class).gerantSocketclient;
     }
-
 }

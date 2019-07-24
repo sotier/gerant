@@ -17,7 +17,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
  */
 public class GerantSocketServer {
 
-    private static final Integer PORT = 6288;
+    @Inject
+    @Named("base.server.port")
+    private Integer PORT;
 
     @Inject
     public void run(){
@@ -29,6 +31,7 @@ public class GerantSocketServer {
             b.group(boosGroup, workGroup);
             b.channel(NioServerSocketChannel.class);
             b.childHandler(new GerantServerInitializer());
+
             System.out.println("服务端等待客户端连接...");
             Channel ch = b.bind(PORT).sync().channel();
             ch.closeFuture().sync();
