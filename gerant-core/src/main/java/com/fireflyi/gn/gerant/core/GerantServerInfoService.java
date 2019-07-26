@@ -1,6 +1,6 @@
-package com.fireflyi.gn.gerant.common.service;
+package com.fireflyi.gn.gerant.core;
 
-import com.fireflyi.gn.gerant.common.service.impl.GerantServerInfoServiceImpl;
+import com.fireflyi.gn.gerant.core.impl.GerantServerInfoServiceImpl;
 import com.fireflyi.gn.gerant.domain.GerantServerInfoEntity;
 import com.google.inject.ImplementedBy;
 

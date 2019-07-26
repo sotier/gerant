@@ -29,7 +29,7 @@
 
         <dependency>
             <groupId>com.fireflyi.gn</groupId>
-            <artifactId>gerant-domain</artifactId>
+            <artifactId>gerant-rpclient</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

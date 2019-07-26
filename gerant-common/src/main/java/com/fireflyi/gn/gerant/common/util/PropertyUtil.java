@@ -1,4 +1,4 @@
-package com.fireflyi.gn.gerant.core.util;
+package com.fireflyi.gn.gerant.common.util;
 
 import java.io.IOException;
 import java.io.InputStream;

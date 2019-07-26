@@ -1,14 +1,10 @@
 package com.fireflyi.gn.gerant.client.core;
 
-import com.fireflyi.gn.gerant.common.service.GerantServerInfoService;
 import com.fireflyi.gn.gerant.domain.protobuf.GerantReqProtobuf;
 import com.google.inject.Inject;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.EventLoop;
 import io.netty.channel.SimpleChannelInboundHandler;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author by fireflyi (6025606@qq.com)

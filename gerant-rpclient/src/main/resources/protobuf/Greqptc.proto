@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package protocol;
+//protoc --java_out=./ Greqptc.proto
+option java_package = "com.fireflyi.gerant.rpclient.protobuf";
+option java_outer_classname = "GreqPtc";
+option java_multiple_files = true;
+
+enum ChatType {
+	CHAT_TYPE_PUBLIC = 0;//群聊
+	CHAT_TYPE_PRIVATE = 1;//私聊
+}
+
+message Greq {
+    int64 time = 1;//消息发送时间
+    ChatType type = 2; //聊天类型
+    string reqMsg = 3;
+    int32 objId = 4; //目标id
+}

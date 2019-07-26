@@ -1,10 +1,9 @@
 package com.fireflyi.gn.gerant.client.core;
 
 import com.fireflyi.gn.gerant.client.handler.ClientIdleStateHandler;
-import com.fireflyi.gn.gerant.common.service.GerantServerInfoService;
+import com.fireflyi.gn.gerant.core.GerantServerInfoService;
 import com.fireflyi.gn.gerant.domain.protobuf.GerantReqProtobuf;
 import com.google.inject.Inject;
-import com.google.inject.name.Named;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

@@ -1,9 +1,7 @@
 package com.fireflyi.gn.gerant.service.handler;
 
-import com.fireflyi.gn.gerant.common.service.GerantServerInfoService;
 import com.fireflyi.gn.gerant.common.util.ProToBufBuild;
 import com.fireflyi.gn.gerant.domain.protobuf.GerantReqProtobuf;
-import com.google.inject.Inject;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
