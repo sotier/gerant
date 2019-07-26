@@ -6,7 +6,7 @@ import "Gresptc.proto";
 
 
 //protoc --plugin=protoc-gen-grpc-java=/Users/lishihao/Desktop/github/grpc-java-master/compiler/build/exe/java_plugin/protoc-gen-grpc-java --grpc-java_out=./ --proto_path=./ McenterApiService.proto
-//protoc --java_out=./ Mcenter.proto
+//protoc --java_out=./ McenterApiService.proto
 //2个命令都要执行来生成2个java文件
 option java_multiple_files = true;
 option java_package = "com.fireflyi.gerant.rpclient";

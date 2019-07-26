@@ -1,14 +1,13 @@
 package com.fireflyi.gerant.mcenter;
 
-import com.fireflyi.gerant.rpclient.McenterApiServiceGrpc;
-import com.fireflyi.gerant.rpclient.protobuf.Greq;
-import com.fireflyi.gerant.rpclient.protobuf.Gres;
+import com.fireflyi.gerant.mcenter.service.McenterApiServiceImpl;
+import com.google.inject.Inject;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.stub.StreamObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 /**
  * @author by fireflyi (6025606@qq.com)
@@ -17,16 +16,18 @@ import java.util.logging.Logger;
  * DESC TODO
  */
 public class McenterApplication {
-
-    private static final Logger logger = Logger.getLogger(McenterApplication.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(McenterLaunches.class);
 
     private Server server;
 
-    private void start() throws IOException {
-        /* The port on which the server should run */
+    @Inject
+    private McenterApiServiceImpl mcenterApiService;
+
+    @Inject
+    private void start() throws IOException, InterruptedException {
         int port = 50051;
         server = ServerBuilder.forPort(port)
-                .addService(new McenterApiServiceImpl())
+                .addService(mcenterApiService)
                 .build()
                 .start();
         logger.info("Server started, listening on " + port);
@@ -39,6 +40,8 @@ public class McenterApplication {
                 System.err.println("*** server shut down");
             }
         });
+
+        blockUntilShutdown();
     }
 
     private void stop() {
@@ -53,25 +56,6 @@ public class McenterApplication {
     private void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
-        }
-    }
-
-    /**
-     * Main launches the server from the command line.
-     */
-    public static void main(String[] args) throws IOException, InterruptedException {
-        final McenterApplication server = new McenterApplication();
-        server.start();
-        server.blockUntilShutdown();
-    }
-
-    static class McenterApiServiceImpl extends McenterApiServiceGrpc.McenterApiServiceImplBase {
-
-        @Override
-        public void mcPipline(Greq req, StreamObserver<Gres> responseObserver) {
-            Gres reply = Gres.newBuilder().setResMsg("来自服务端的信息->111111 " + req.getReqMsg()).build();
-            responseObserver.onNext(reply);
-            responseObserver.onCompleted();
         }
     }
 

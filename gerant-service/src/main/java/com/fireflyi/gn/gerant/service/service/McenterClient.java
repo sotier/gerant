@@ -3,12 +3,14 @@ package com.fireflyi.gn.gerant.service.service;
 import com.fireflyi.gerant.rpclient.McenterApiServiceGrpc;
 import com.fireflyi.gerant.rpclient.protobuf.Greq;
 import com.fireflyi.gerant.rpclient.protobuf.Gres;
+import com.fireflyi.gn.gerant.domain.enumentity.CmdIdEnum;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 /**
  * @author by fireflyi (6025606@qq.com)
@@ -17,7 +19,7 @@ import java.util.logging.Logger;
  * DESC TODO
  */
 public class McenterClient {
-    private static final Logger logger = Logger.getLogger(McenterClient.class.getName());
+    private static Logger logger= LoggerFactory.getLogger(McenterClient.class);
 
     private final ManagedChannel channel;
     private final McenterApiServiceGrpc.McenterApiServiceBlockingStub blockingStub;
@@ -43,14 +45,19 @@ public class McenterClient {
 
     /** Say hello to server. */
     public void greet(String name) {
-        Greq request = Greq.newBuilder().setReqMsg(name).build();
+        Greq.Builder req = Greq.newBuilder();
+        req.setCmdId(CmdIdEnum.USER_TO_USER.cmdId);
+        req.setReqMsg("ss");
+        Greq request = req.build();
+
         Gres response;
         try {
             response = blockingStub.mcPipline(request);
         } catch (StatusRuntimeException e) {
             return;
         }
-        logger.info("收到服务端信息返回: " + response.getResMsg());
+        System.out.println("收到服务端信息返回: " + response.getResMsg());
+        logger.info("收到服务端信息返回2: " + response.getResMsg());
     }
 
     /**
@@ -65,7 +72,9 @@ public class McenterClient {
             if (args.length > 0) {
                 user = args[0]; /* Use the arg as the name to greet if provided */
             }
-            client.greet(user);
+            for(int i=0;i<10;i++) {
+                client.greet(user);
+            }
         } finally {
             client.shutdown();
         }

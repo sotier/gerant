@@ -9,36 +9,28 @@ public interface GreqOrBuilder extends
 
   /**
    * <pre>
-   *消息发送时间
+   *聊天类型
    * </pre>
    *
-   * <code>int64 time = 1;</code>
+   * <code>string cmdId = 1;</code>
    */
-  long getTime();
-
+  java.lang.String getCmdId();
   /**
    * <pre>
    *聊天类型
    * </pre>
    *
-   * <code>.protocol.ChatType type = 2;</code>
+   * <code>string cmdId = 1;</code>
    */
-  int getTypeValue();
-  /**
-   * <pre>
-   *聊天类型
-   * </pre>
-   *
-   * <code>.protocol.ChatType type = 2;</code>
-   */
-  com.fireflyi.gerant.rpclient.protobuf.ChatType getType();
+  com.google.protobuf.ByteString
+      getCmdIdBytes();
 
   /**
-   * <code>string reqMsg = 3;</code>
+   * <code>string reqMsg = 2;</code>
    */
   java.lang.String getReqMsg();
   /**
-   * <code>string reqMsg = 3;</code>
+   * <code>string reqMsg = 2;</code>
    */
   com.google.protobuf.ByteString
       getReqMsgBytes();
@@ -48,7 +40,16 @@ public interface GreqOrBuilder extends
    *目标id
    * </pre>
    *
-   * <code>int32 objId = 4;</code>
+   * <code>int32 objId = 3;</code>
    */
   int getObjId();
+
+  /**
+   * <pre>
+   *消息发送时间
+   * </pre>
+   *
+   * <code>int64 time = 4;</code>
+   */
+  long getTime();
 }
