@@ -17,6 +17,7 @@
         <module>gerant-domain</module>
         <module>gerant-mcenter</module>
         <module>gerant-rpclient</module>
+        <module>gerant-msync</module>
     </modules>
 
     <dependencies>

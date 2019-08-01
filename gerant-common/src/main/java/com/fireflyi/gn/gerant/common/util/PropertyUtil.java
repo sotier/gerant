@@ -2,6 +2,8 @@ package com.fireflyi.gn.gerant.common.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -11,6 +13,17 @@ import java.util.Properties;
  * DESC TODO
  */
 public class PropertyUtil {
+
+    public static List<String> bindProperties(){
+        String guice = "config/guice.properties";
+        String cache = "config/cache.properties";
+
+        ArrayList<String> l = new ArrayList<String>();
+        l.add(guice);
+        l.add(cache);
+        return l;
+    }
+
 
     /**
      *
