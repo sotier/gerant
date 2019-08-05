@@ -1,4 +1,4 @@
-package com.fireflyi.gn.gerant.service.service;
+package client;
 
 import com.fireflyi.gerant.rpclient.McenterApiServiceGrpc;
 import com.fireflyi.gerant.rpclient.protobuf.Greq;
@@ -18,14 +18,13 @@ import java.util.concurrent.TimeUnit;
  * @date 2019/7/26
  * DESC TODO
  */
-public class McenterClient {
-    private static Logger logger= LoggerFactory.getLogger(McenterClient.class);
-
+public class McenterLaunchesClient {
+    private Logger logger= LoggerFactory.getLogger(McenterLaunchesClient.class);
     private final ManagedChannel channel;
     private final McenterApiServiceGrpc.McenterApiServiceBlockingStub blockingStub;
 
     /** Construct client connecting to HelloWorld server at {@code host:port}. */
-    public McenterClient(String host, int port) {
+    public McenterLaunchesClient(String host, int port) {
         this(ManagedChannelBuilder.forAddress(host, port)
                 // Channels are secure by default (via SSL/TLS). For the example we disable TLS to avoid
                 // needing certificates.
@@ -34,7 +33,7 @@ public class McenterClient {
     }
 
     /** Construct client for accessing HelloWorld server using the existing channel. */
-    McenterClient(ManagedChannel channel) {
+    McenterLaunchesClient(ManagedChannel channel) {
         this.channel = channel;
         blockingStub = McenterApiServiceGrpc.newBlockingStub(channel);
     }
@@ -56,8 +55,8 @@ public class McenterClient {
         } catch (StatusRuntimeException e) {
             return;
         }
-        System.out.println("收到服务端信息返回: " + response.getResMsg());
-        logger.info("收到服务端信息返回2: " + response.getResMsg());
+        logger.info("收到服务端信息返回: " + response.getResMsg());
+
     }
 
     /**
@@ -65,16 +64,19 @@ public class McenterClient {
      * greeting.
      */
     public static void main(String[] args) throws Exception {
-        McenterClient client = new McenterClient("localhost", 50051);
+        McenterLaunchesClient client = new McenterLaunchesClient("localhost", 50051);
         try {
             /* Access a service running on the local machine on port 50051 */
             String user = "来自客户端的信息->222222222";
             if (args.length > 0) {
                 user = args[0]; /* Use the arg as the name to greet if provided */
             }
-            for(int i=0;i<10;i++) {
+            long a = System.currentTimeMillis();
+            for(int i=0;i<1000;i++) {
                 client.greet(user);
             }
+            long b = System.currentTimeMillis();
+            System.out.printf(b-a+"");
         } finally {
             client.shutdown();
         }

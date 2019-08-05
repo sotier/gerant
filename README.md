@@ -3,7 +3,7 @@
 详细介绍地址
 https://www.fireflyi.com/article/47
 
-<img src="https://blogstatic.fireflyi.com/oneblog/gerant.svg">
+<img src="https://blogstatic.fireflyi.com/oneblog/gerantv2.svg">
 
 ## 2.📘功能介绍
 * [ ] 分布式轻量级，高性能的IM大型结构完整方案

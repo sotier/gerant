@@ -1,5 +1,6 @@
 package com.fireflyi.gerant.mcenter.service;
 
+import com.fireflyi.gerant.mcenter.McenterLaunches;
 import com.fireflyi.gerant.mcenter.core.McenterHandlerAdapter;
 import com.fireflyi.gerant.mcenter.core.impl.UsertuService;
 import com.fireflyi.gerant.rpclient.McenterApiServiceGrpc;
@@ -8,6 +9,8 @@ import com.fireflyi.gerant.rpclient.protobuf.Gres;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import io.grpc.stub.StreamObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,8 +27,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Singleton
 public class McenterApiServiceImpl  extends McenterApiServiceGrpc.McenterApiServiceImplBase implements McenterBaseApiService{
-
-    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 10, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue());
+    private static final Logger logger = LoggerFactory.getLogger(McenterApiServiceImpl.class);
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(100, 100, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue());
 
     private Set<McenterHandlerAdapter> handlers = new HashSet<McenterHandlerAdapter>();
 
@@ -39,10 +42,8 @@ public class McenterApiServiceImpl  extends McenterApiServiceGrpc.McenterApiServ
 
     @Override
     public void mcPipline(Greq req, StreamObserver<Gres> responseObserver) {
-
         //异步处理消息
         executor.execute(()-> doHandlers(req));
-
         //直接返回客户端res
         Gres reply = Gres.newBuilder().setResMsg("来自服务端的信息->111111 " + req.getReqMsg()).build();
         responseObserver.onNext(reply);

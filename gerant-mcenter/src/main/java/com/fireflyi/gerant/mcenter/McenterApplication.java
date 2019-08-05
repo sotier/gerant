@@ -2,6 +2,7 @@ package com.fireflyi.gerant.mcenter;
 
 import com.fireflyi.gerant.mcenter.service.McenterApiServiceImpl;
 import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import org.slf4j.Logger;
@@ -35,9 +36,9 @@ public class McenterApplication {
             @Override
             public void run() {
                 // Use stderr here since the logger may have been reset by its JVM shutdown hook.
-                System.err.println("*** shutting down gRPC server since JVM is shutting down");
+                logger.info("*** shutting down gRPC McenterApplication since JVM is shutting down");
                 McenterApplication.this.stop();
-                System.err.println("*** server shut down");
+                logger.info("*** McenterApplication shut down");
             }
         });
 

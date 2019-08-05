@@ -18,6 +18,7 @@
         <module>gerant-mcenter</module>
         <module>gerant-rpclient</module>
         <module>gerant-msync</module>
+        <module>gerant-route</module>
     </modules>
 
     <dependencies>

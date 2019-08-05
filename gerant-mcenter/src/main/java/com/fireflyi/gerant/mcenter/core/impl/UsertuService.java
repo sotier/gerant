@@ -18,6 +18,11 @@ public class UsertuService extends McenterHandlerAdapter {
 
     @Override
     public void doHandler(Greq var1) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("UsertuService->"+var1.getCmdId());
     }
 
