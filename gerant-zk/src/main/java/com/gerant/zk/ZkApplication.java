@@ -3,6 +3,7 @@ package com.gerant.zk;
 import com.gerant.zk.service.ZkService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.google.inject.name.Named;
 
 /**
  * @author by fireflyi (6025606@qq.com)
@@ -14,12 +15,12 @@ import com.google.inject.Singleton;
 public class ZkApplication {
 
     @Inject
-    private ZkService zkService;
+    ServerRegistryZK serverRegistryZK;
 
     @Inject
     public void run(){
-        zkService.getAll();
-        zkService.zkSubscribeEvent("");
+        Thread t = new Thread(serverRegistryZK);
+        t.start();
     }
 
 }

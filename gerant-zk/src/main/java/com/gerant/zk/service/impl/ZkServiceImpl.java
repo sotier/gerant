@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -47,7 +46,8 @@ public class ZkServiceImpl implements ZkService {
         String localIp;
         try {
             localIp = InetAddress.getLocalHost().getHostAddress();
-            logger.info("localIp->{},serverPort->{}",localIp,zkPort);
+            logger.info("zk注册信息，Ip->{},Port->{}",localIp,zkPort);
+            //xxxxxxxx
             //zkc = new ZkClient(localIp+":"+zkPort);
             zkc = new ZkClient("127.0.0.1:"+zkPort);
             //检查root节点
@@ -73,16 +73,16 @@ public class ZkServiceImpl implements ZkService {
     }
 
     @Override
-    public void addLocalNode() {
-
+    public void addLocalNode(String path, String value) {
+        zkc.createEphemeral(path, value);
     }
 
     @Override
     public void zkSubscribeEvent(String var) {
-        zkc.subscribeChildChanges(rootNode, new IZkChildListener() {
+        zkc.subscribeChildChanges(var, new IZkChildListener() {
             @Override
-            public void handleChildChange(String parentPath, List<String> currentChilds) throws Exception {
-                logger.info("清除/更新本地缓存 parentPath->{},currentChilds->{}", parentPath,currentChilds.toString());
+            public void handleChildChange(String path, List<String> nodes) throws Exception {
+                logger.info("节点发送变化path->{},nodes->{}", path, nodes.toString());
             }
         });
     }

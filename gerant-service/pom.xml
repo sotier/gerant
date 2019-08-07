@@ -20,10 +20,15 @@
             <version>4.1.37.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
         <dependency>
             <groupId>com.fireflyi.gn</groupId>
             <artifactId>gerant-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fireflyi.gn</groupId>
+            <artifactId>gerant-zk</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

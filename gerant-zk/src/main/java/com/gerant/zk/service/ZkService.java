@@ -30,10 +30,10 @@ public interface ZkService {
     /**
      * 将本机服务节点加入
      */
-    void addLocalNode();
+    void addLocalNode(String path, String value);
 
     /**
-     * 节点监听事件
+     * 客户端监听节点
      * @param var
      */
     void zkSubscribeEvent(String var);

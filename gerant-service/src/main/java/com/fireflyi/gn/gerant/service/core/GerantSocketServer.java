@@ -1,6 +1,8 @@
 package com.fireflyi.gn.gerant.service.core;
 
 import com.fireflyi.gn.gerant.core.cache.RedisClient;
+import com.gerant.zk.ServerRegistryZK;
+import com.gerant.zk.ZkApplication;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import io.netty.bootstrap.ServerBootstrap;
@@ -18,6 +20,9 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class GerantSocketServer {
 
     @Inject
+    ServerRegistryZK serverRegistryZK;
+
+    @Inject
     @Named("base.server.port")
     private Integer PORT;
 
@@ -32,9 +37,15 @@ public class GerantSocketServer {
             b.channel(NioServerSocketChannel.class);
             b.childHandler(new GerantServerInitializer());
 
-            System.out.println("服务端等待客户端连接...");
             Channel ch = b.bind(PORT).sync().channel();
+
+            //注册zk
+            Thread t = new Thread(serverRegistryZK);
+            t.start();
+
+            //
             ch.closeFuture().sync();
+
         }catch (Exception e){
             e.printStackTrace();
         }finally {
